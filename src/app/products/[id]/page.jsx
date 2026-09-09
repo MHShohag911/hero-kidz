@@ -4,6 +4,43 @@ import React from 'react';
 import { FaStar } from 'react-icons/fa';
 import { FaCartPlus } from 'react-icons/fa6';
 
+// app/products/[id]/page.jsx
+
+export async function generateMetadata({ params }) {
+  const product = await getSingleProduct(params.id); // your existing fetch function
+
+  if (!product) {
+    return { title: "Product Not Found" };
+  }
+
+  return {
+    title: product.title,
+    description: product.description?.slice(0, 160) || "Educational toy designed to help kids learn through play.",
+
+    openGraph: {
+      type: "website",
+      siteName: "Hero Kidz",
+      title: product.title,
+      description: product.description?.slice(0, 160) || "Fun and educational learning toy for the kids. Safe, colorful and engaging.",
+      images: [
+        {
+          url: product.image,
+          width: 1200,
+          height: 630,
+          alt: product.title,
+        },
+      ],
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title: product.title,
+      description: product.description?.slice(0, 160) || "Fun and educational learning toy for kids.",
+      images: [product.image],
+    },
+  };
+}
+
 const ProductDetails = async ({ params }) => {
     const { id } = await params;
     const product = await getSingleProduct(id);
