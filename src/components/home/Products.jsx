@@ -1,14 +1,16 @@
 import React from 'react';
-import products from "@/data/toys.json"
 import ProductCard from '../cards/ProductCard';
+import { getProducts } from '@/actions/product';
 
-const Products = () => {
+const Products = async () => {
+    const products = (await getProducts()) || [];
+    console.log(products)
     return (
         <div>
             <h2 className='text-center text-4xl font-bold mb-10'>Our Products</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 {
-                    products?.map((product, idx) => <ProductCard key={idx} product={product}></ProductCard>)
+                    products?.map((product) => <ProductCard key={product._id} product={product}></ProductCard>)
                 }
             </div>
         </div>

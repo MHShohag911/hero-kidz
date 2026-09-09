@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { FaStar, FaStarHalfAlt, FaShoppingCart, FaFire } from "react-icons/fa";
 
@@ -29,7 +30,7 @@ export default function ProductCard({ product, onAddToCart }) {
 
 //   if (!product) return <ProductCardSkeleton />;
 
-  const { title, image, price, discount = 0, ratings = 0, reviews = 0, sold = 0 } =
+  const { _id, title, image, price, discount = 0, ratings = 0, reviews = 0, sold = 0 } =
     product;
 
   const finalPrice = discount > 0 ? Math.round(price * (1 - discount / 100)) : price;
@@ -54,7 +55,7 @@ export default function ProductCard({ product, onAddToCart }) {
           src={image}
           alt={title}
         //   fill
-          width={200}
+          width={300}
           height={180}
         //   sizes="(max-width: 768px) 100vw, 320px"
           className="object-contain p-4"
@@ -106,7 +107,7 @@ export default function ProductCard({ product, onAddToCart }) {
           onClick={handleAddToCart}
           disabled={adding}
           className={`btn btn-block rounded-full mt-2 border-none text-white ${
-            added ? "bg-[#3FA66B]" : "bg-[#2B2B52] hover:bg-[#1c1c3d]"
+            added ? "bg-[#3FA66B]" : "bg-primary hover:bg-[#1c1c3d]"
           }`}
         >
           {adding ? (
@@ -120,6 +121,7 @@ export default function ProductCard({ product, onAddToCart }) {
             </>
           )}
         </button>
+        <Link className="btn rounded-full" href={`/products/${_id}`}>View Details</Link>
       </div>
     </div>
   );
@@ -139,31 +141,3 @@ function StarRating({ value }) {
   return <div className="flex items-center gap-0.5">{stars}</div>;
 }
 
-/**
- * ProductCardSkeleton
- * Mirrors ProductCard's exact layout using DaisyUI's `skeleton` class,
- * so lists don't jump when real data arrives.
- */
-/* export function ProductCardSkeleton() {
-  return (
-    <div className="card w-full max-w-xs bg-base-100 border border-base-200 rounded-3xl shadow-sm overflow-hidden">
-      <div className="aspect-square p-4">
-        <div className="skeleton h-full w-full rounded-2xl" />
-      </div>
-
-      <div className="card-body gap-3 p-4">
-        <div className="skeleton h-4 w-11/12 rounded-full" />
-        <div className="skeleton h-4 w-2/3 rounded-full" />
-
-        <div className="flex items-center gap-2 pt-1">
-          <div className="skeleton h-3.5 w-20 rounded-full" />
-          <div className="skeleton h-3.5 w-10 rounded-full" />
-        </div>
-
-        <div className="skeleton h-6 w-24 rounded-full mt-1" />
-
-        <div className="skeleton h-11 w-full rounded-full mt-2" />
-      </div>
-    </div>
-  );
-} */
