@@ -61,7 +61,7 @@ const ProductDetails = async ({ params }) => {
         qna,
     } = product;
 
-    const discountedPrice = price - (price * discount) / 100;
+    const discountedPrice = price - (price * discount || 0) / 100;
 
     return (
         <div className='max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-10'>
@@ -97,7 +97,7 @@ const ProductDetails = async ({ params }) => {
 
                 {/* Price */}
                 <div className="mb-4">
-                    <span className="text-2xl font-bold text-primary">৳{discountedPrice}</span>
+                    <span className="text-2xl font-bold text-primary">৳{discountedPrice} only</span>
                     {discount > 0 && (<span className='line-through text-gray-400 ml-3'>৳{price}</span>)}
                 </div>
 
