@@ -7,7 +7,9 @@ import { FaCartPlus } from 'react-icons/fa6';
 // app/products/[id]/page.jsx
 
 export async function generateMetadata({ params }) {
-  const product = await getSingleProduct(params.id); // your existing fetch function
+  const {id} = await params;
+  console.log("this is id", id);
+  const product = await getSingleProduct(id); // your existing fetch function
 
   if (!product) {
     return { title: "Product Not Found" };
