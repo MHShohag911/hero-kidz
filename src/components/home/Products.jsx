@@ -3,7 +3,7 @@ import ProductCard from '../cards/ProductCard';
 import { getProducts } from '@/actions/product';
 
 const Products = async () => {
-    const products = (await getProducts()) || [];
+    const products = await getProducts();
     console.log(products)
     return (
         <div>
