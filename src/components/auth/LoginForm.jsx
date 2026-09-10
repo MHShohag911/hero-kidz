@@ -1,9 +1,12 @@
 "use client"
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 
 const LoginForm = () => {
+    const router = useRouter();
     const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = async (e) => {
@@ -17,6 +20,12 @@ const LoginForm = () => {
 
         // Add your login logic here
         console.log("Login submitted", result, email, password);
+        if(!result.ok){
+            Swal.fire("error", "Email password not matched", "error");
+        } else {
+            Swal.fire("success", "Welcome to Kidz Hub", "success");
+            router.push("/");
+        }
     };
     return (
         <div>
