@@ -19,7 +19,6 @@ const LoginForm = () => {
         const result = await signIn("credentials", {email, password, redirect:false})
 
         // Add your login logic here
-        console.log("Login submitted", result, email, password);
         if(!result.ok){
             Swal.fire("error", "Email password not matched", "error");
         } else {

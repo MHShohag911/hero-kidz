@@ -28,7 +28,6 @@ const RegisterForm = () => {
         }
 
         // Add your registration logic here
-        console.log("Register submitted", user);
     };
 
     return (
