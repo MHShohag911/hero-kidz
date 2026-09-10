@@ -4,8 +4,12 @@ import { collections, dbConnect, toPlainObject } from "@/lib/dbConnect";
 import { ObjectId } from "mongodb";
 
 export const getProducts = async () => {
-    const products = await dbConnect(collections.PRODUCTS).find().toArray();
-    return products;
+  const products = await dbConnect(collections.PRODUCTS).find().toArray();
+
+  return products.map((product) => ({
+    ...product,
+    _id: product._id.toString(),
+  }));
 };
 
 export const getSingleProduct = async (id) => {
@@ -14,7 +18,7 @@ export const getSingleProduct = async (id) => {
     }
     const query = {_id: new ObjectId(id)};
     const product = await dbConnect(collections.PRODUCTS).findOne(query);
-    return product || {};
+    return {...product, _id:product._id.toString()} || {};
 }
 
 

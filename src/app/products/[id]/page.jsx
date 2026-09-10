@@ -1,4 +1,5 @@
 import { getSingleProduct } from '@/actions/product';
+import CartButton from '@/components/buttons/CartButton';
 import Image from 'next/image';
 import React from 'react';
 import { FaStar } from 'react-icons/fa';
@@ -102,7 +103,7 @@ const ProductDetails = async ({ params }) => {
                 </div>
 
                 {/* Actions */}
-                <button className="btn btn-primary btn-wide flex gap-2"><FaCartPlus></FaCartPlus>Add to Cart</button>
+                <CartButton product={product}></CartButton>
             </div>
             
                 <div className='col-span-full'>
