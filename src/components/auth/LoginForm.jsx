@@ -1,16 +1,23 @@
 "use client"
+import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import React, { useState } from 'react';
 
 const LoginForm = () => {
     const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const form = await e.target;
+        const email = await form.email.value;
+        const password = await form.password.value;
+        console.log("Login submitted", email, password);
 
-    // Add your login logic here
-    console.log("Login submitted");
-  };
+        const result = await signIn("credentials", {email, password, redirect:false})
+
+        // Add your login logic here
+        console.log("Login submitted", result, email, password);
+    };
     return (
         <div>
             <form onSubmit={handleSubmit} className="space-y-5">

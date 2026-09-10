@@ -1,15 +1,18 @@
+import { loginUser } from "@/actions/server/auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+
 export const authOptions = {
   // Configure one or more authentication providers
   providers: [
     CredentialsProvider({
       name: "Credentials",
-      credentials: {
+      credentials: {/* 
         username: { label: "Username", type: "text", placeholder: "jsmith" },
-        password: { label: "Password", type: "password" },
+        password: { label: "Password", type: "password" }, */
       },
       async authorize(credentials, req) {
-
-          return null;
+        const user = await loginUser(credentials);
+        return user;
       },
     }),
   ],
