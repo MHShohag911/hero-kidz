@@ -1,4 +1,4 @@
-import { getSingleProduct } from '@/actions/product';
+import { getSingleProduct } from '@/actions/server/product';
 import CartButton from '@/components/buttons/CartButton';
 import Image from 'next/image';
 import React from 'react';
