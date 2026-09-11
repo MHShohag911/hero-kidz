@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 const SocialButton = () => {
     const handleGoogleLogin = async () => {
     // Add Google authentication here
-    const result = await signIn("google", {redirect: "false"});
+    const result = await signIn("google", {redirect: false});
     console.log("Google login", result);
     if(result.ok){
         Swal.fire("success", "Welcome", "success");
