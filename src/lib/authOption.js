@@ -2,6 +2,11 @@ import { loginUser } from "@/actions/server/auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 
+console.log(
+  "NEXTAUTH_SECRET exists:",
+  !!process.env.NEXTAUTH_SECRET
+);
+
 export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   // Configure one or more authentication providers
