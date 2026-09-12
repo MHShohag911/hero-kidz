@@ -1,12 +1,13 @@
 "use client"
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 
 const LoginForm = () => {
     const searchParams = useSearchParams();
+    const router = useRouter();
     const callback = searchParams.get("callbackUrl") || "/";
     // console.log("callback", callback);
     const [showPassword, setShowPassword] = useState(false);
@@ -21,7 +22,7 @@ const LoginForm = () => {
         const result = await signIn("credentials", {
             email, 
             password, 
-            // redirect: false,
+            redirect: false,
             callbackUrl: searchParams.get("callbackUrl") || "/",
         })
 
@@ -30,6 +31,7 @@ const LoginForm = () => {
             Swal.fire("error", "Email password not matched", "error");
         } else {
             Swal.fire("success", "Welcome to Kidz Hub", "success");
+            router.push(callback);
         }
     };
     return (
