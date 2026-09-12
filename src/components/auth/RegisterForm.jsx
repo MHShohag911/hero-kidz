@@ -1,6 +1,7 @@
 "use client"
 
 import { postUser } from '@/actions/server/auth';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
@@ -103,11 +104,22 @@ const RegisterForm = () => {
                 {/* Register Button */}
                 <button
                     type="submit"
-                    className="w-full rounded-lg bg-primary py-3 font-semibold text-white transition hover:bg-gray-400 active:scale-[0.99]"
+                    className="w-full cursor-pointer rounded-lg bg-primary py-3 font-semibold text-white transition hover:bg-gray-400 active:scale-[0.99]"
                 >
                     Register
                 </button>
             </form>
+
+            {/* Login Toggle */}
+        <p className="mt-6 text-center text-sm text-gray-600">
+          Already have an account?{" "}
+          <Link
+            href="/login"
+            className="font-semibold text-primary"
+          >
+            Login
+          </Link>
+        </p>
         </div>
     );
 };

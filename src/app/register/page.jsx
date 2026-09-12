@@ -32,16 +32,7 @@ export default function Register() {
         {/* Google */}
         <SocialButton></SocialButton>
 
-        {/* Login Toggle */}
-        <p className="mt-6 text-center text-sm text-gray-600">
-          Already have an account?{" "}
-          <Link
-            href="/login"
-            className="font-semibold text-primary"
-          >
-            Login
-          </Link>
-        </p>
+        
       </div>
     </main>
   );

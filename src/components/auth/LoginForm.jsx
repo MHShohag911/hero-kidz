@@ -1,12 +1,14 @@
 "use client"
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 
 const LoginForm = () => {
-    const router = useRouter();
+    const searchParams = useSearchParams();
+    const callback = searchParams.get("callbackUrl") || "/";
+    // console.log("callback", callback);
     const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = async (e) => {
@@ -16,14 +18,18 @@ const LoginForm = () => {
         const password = await form.password.value;
         console.log("Login submitted", email, password);
 
-        const result = await signIn("credentials", {email, password, redirect:false})
+        const result = await signIn("credentials", {
+            email, 
+            password, 
+            // redirect: false,
+            callbackUrl: searchParams.get("callbackUrl") || "/",
+        })
 
         // Add your login logic here
         if(!result.ok){
             Swal.fire("error", "Email password not matched", "error");
         } else {
             Swal.fire("success", "Welcome to Kidz Hub", "success");
-            router.push("/");
         }
     };
     return (
@@ -89,11 +95,22 @@ const LoginForm = () => {
                 {/* Login Button */}
                 <button
                     type="submit"
-                    className="w-full rounded-lg bg-primary py-3 font-semibold text-white transition hover:bg-gray-400 active:scale-[0.99]"
+                    className="w-full cursor-pointer rounded-lg bg-primary py-3 font-semibold text-white transition hover:bg-gray-400 active:scale-[0.99]"
                 >
                     Login
                 </button>
             </form>
+            
+        {/* Register Toggle */}
+        <p className="mt-6 text-center text-sm text-gray-600">
+          Don't have an account?{" "}
+          <Link
+            href={`/register?callbackUrl=${callback}`}
+            className="font-semibold text-primary hover:underline"
+          >
+            Register
+          </Link>
+        </p>
         </div>
     );
 };
