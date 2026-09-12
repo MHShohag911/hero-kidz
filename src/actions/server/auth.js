@@ -12,7 +12,7 @@ export const postUser = async (payload) => {
   const isExist = await dbConnect(collections.USERS).findOne({ email });
   if (isExist) {
     return null;
-  }
+  } 
 
   // Create User
   const newUser = {
