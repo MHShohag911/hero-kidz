@@ -11,7 +11,7 @@ const SocialButton = () => {
     const handleGoogleLogin = async () => {
         // Add Google authentication here
         const result = await signIn("google", {
-            redirect: false,
+            // redirect: false,
             callbackUrl: searchParams.get("callbackUrl") || "/"
         });
         console.log("Google login", result);

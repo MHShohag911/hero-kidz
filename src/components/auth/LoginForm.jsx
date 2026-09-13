@@ -28,7 +28,7 @@ const LoginForm = () => {
 
         // Add your login logic here
         if(!result.ok){
-            Swal.fire("error", "Email password not matched", "error");
+            Swal.fire("error", "Email password not matched. Try Google Login/Register", "error");
         } else {
             Swal.fire("success", "Welcome to Kidz Hub", "success");
             router.push(callback);

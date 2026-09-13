@@ -5,6 +5,7 @@ import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 
 const RegisterForm = () => {
     const params = useSearchParams();
@@ -26,10 +27,18 @@ const RegisterForm = () => {
 
         const result = await postUser(user);
         if(result.acknowledged){
-            // console.log(result)
-            // router.push('/login');
-            const result = await signIn("credentials", {email, password,  callbackUrl: callbackUrl});
-            alert("Successful");
+            const result = await signIn("credentials", {
+                email, 
+                password,  
+                redirect: false,
+                callbackUrl: callbackUrl,
+            });
+            if(result.ok){
+                Swal.fire("success", "Registered Successfully", "success")
+                router.push(callbackUrl);
+            } else {
+                Swal.fire("error", "Sorry", "error");
+            }
         }
 
         // Add your registration logic here
