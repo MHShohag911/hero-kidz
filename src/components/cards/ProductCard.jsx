@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { FaStar, FaStarHalfAlt, FaShoppingCart, FaFire } from "react-icons/fa";
+import CartButton from "../buttons/CartButton";
 
 /**
  * ProductCard
@@ -25,8 +26,6 @@ import { FaStar, FaStarHalfAlt, FaShoppingCart, FaFire } from "react-icons/fa";
  * onAddToCart?: (product) => void | Promise<void>
  */
 export default function ProductCard({ product, onAddToCart }) {
-  const [adding, setAdding] = useState(false);
-  const [added, setAdded] = useState(false);
 
 //   if (!product) return <ProductCardSkeleton />;
 
@@ -34,18 +33,6 @@ export default function ProductCard({ product, onAddToCart }) {
     product;
 
   const finalPrice = discount > 0 ? Math.round(price * (1 - discount / 100)) : price;
-
-  const handleAddToCart = async () => {
-    if (adding || added) return;
-    setAdding(true);
-    try {
-      await onAddToCart?.(product);
-      setAdded(true);
-      setTimeout(() => setAdded(false), 1800);
-    } finally {
-      setAdding(false);
-    }
-  };
 
   return (
     <div className="card w-full max-w-xs bg-base-100 border border-base-200 rounded-3xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden mx-auto">
@@ -77,7 +64,7 @@ export default function ProductCard({ product, onAddToCart }) {
 
       {/* Body */}
       <div className="card-body gap-2 p-4">
-        <h3 className="font-semibold text-base leading-snug line-clamp-2 min-h-[2.5rem]">
+        <h3 className="font-semibold text-base leading-snug line-clamp-2 min-h-10">
           {title}
         </h3>
 
@@ -103,24 +90,7 @@ export default function ProductCard({ product, onAddToCart }) {
         </div>
 
         {/* Add to cart */}
-        <button
-          onClick={handleAddToCart}
-          disabled={adding}
-          className={`btn btn-block rounded-full mt-2 border-none text-white ${
-            added ? "bg-[#3FA66B]" : "bg-primary hover:bg-[#1c1c3d]"
-          }`}
-        >
-          {adding ? (
-            <span className="loading loading-spinner loading-sm" />
-          ) : added ? (
-            "Added ✓"
-          ) : (
-            <>
-              <FaShoppingCart className="h-4 w-4" />
-              Add to Cart
-            </>
-          )}
-        </button>
+        <CartButton product={product} onAddToCart={onAddToCart}></CartButton>
         <Link className="btn rounded-full" href={`/products/${_id}`}>View Details</Link>
       </div>
     </div>

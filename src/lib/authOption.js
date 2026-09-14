@@ -44,8 +44,8 @@ export const authOptions = {
 
       const newUser = {
         provider: "credentials",
-        name: user.name,
         email: user.email,
+        name: user.name,
         image: user.image,
         role: "user",
       };
@@ -62,6 +62,7 @@ export const authOptions = {
       if (token) {
         session.role = token?.role;
         session.email = token?.email;
+
       }
       return session;
     },
