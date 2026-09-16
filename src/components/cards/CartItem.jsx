@@ -1,13 +1,15 @@
 "use client";
 
-import { deleteItemsFromCart } from '@/actions/server/cart';
+import { decreaseItemDb, deleteItemsFromCart, increaseItemDb } from '@/actions/server/cart';
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import { FaMinus, FaPlus, FaTrash } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 
-const CartItem = ({ item, onIncrease, onDecrease }) => {
+const CartItem = ({ item, removeItem, updateQuantity }) => {
     const { title, image, quantity, price, _id } = item;
+
+    const [loading, setLoading] = useState(false);
 
     const handleDeleteCart = async () => {
         Swal.fire({
@@ -22,6 +24,7 @@ const CartItem = ({ item, onIncrease, onDecrease }) => {
             if (result.isConfirmed) {
                 const result = await deleteItemsFromCart(_id);
                 if (result.success) {
+                    removeItem(_id);
                     Swal.fire({
                         title: "Deleted!",
                         text: "Your file has been deleted.",
@@ -37,6 +40,29 @@ const CartItem = ({ item, onIncrease, onDecrease }) => {
             }
         });
     }
+
+    const onIncrease = async () => {
+        setLoading(true);
+        const result = await increaseItemDb(_id, quantity);
+
+        if(result.success){
+            Swal.fire("success", "quantity increased", "success");
+            updateQuantity(_id, quantity + 1);
+        }
+        setLoading(false);
+    }
+
+    const onDecrease = async () => {
+        setLoading(true);
+        const result = await decreaseItemDb(_id, quantity);
+
+        if(result.success){
+            Swal.fire("success", "quantity decreased", "success");
+            updateQuantity(_id, quantity - 1);
+        }
+        setLoading(false)
+    }
+
     return (
         <div className='flex items-center gap-4 p-4 bg-base-100 shadow rounded-xl'>
             {/* Image */}
@@ -60,14 +86,18 @@ const CartItem = ({ item, onIncrease, onDecrease }) => {
                 <button
                     className="btn btn-xs btn-outline"
                     onClick={onDecrease}
-                    disabled={quantity === 1}
+                    disabled={quantity === 1 || loading}
                 >
                     <FaMinus></FaMinus>
                 </button>
 
                 <span className="px-3 font-medium">{quantity}</span>
 
-                <button className="btn btn-xs btn-outline" onClick={onIncrease}><FaPlus></FaPlus></button>
+                <button 
+                className="btn btn-xs btn-outline" 
+                onClick={onIncrease}
+                disabled={quantity === 10 || loading}
+                ><FaPlus></FaPlus></button>
             </div>
 
             {/* Total + Remove */}
