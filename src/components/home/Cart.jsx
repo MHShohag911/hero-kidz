@@ -2,6 +2,7 @@
 
 import React, { useMemo, useState } from "react";
 import CartItem from "../cards/CartItem";
+import Link from "next/link";
 
 const Cart = ({ cartItem = [] }) => {
   const [items, setItems] = useState(cartItem);
@@ -106,12 +107,12 @@ const Cart = ({ cartItem = [] }) => {
             </div>
 
             {/* Confirm Button */}
-            <button
+            <Link href={"/checkout"}
               className="btn btn-primary w-full mt-5"
               disabled={items.length === 0}
             >
               Confirm Order
-            </button>
+            </Link>
           </div>
         </div>
       </div>

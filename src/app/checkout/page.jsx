@@ -1,21 +1,19 @@
 import { getCart } from '@/actions/server/cart';
-import Cart from '@/components/home/Cart';
+import Checkout from '@/components/home/Checkout';
 import React from 'react';
 
-const CartPage = async () => {
+const CheckoutPage = async () => {
     const cartItems = await getCart();
     const formattedItems = cartItems.map(item => ({ ...item, _id: item._id.toString() }))
-
     return (
         <div>
             {/* Title */}
             <div className="">
-                <h2 className="text-4xl py-4 font-bold border-l-8 border-primary pl-8">My Cart</h2>
+                <h2 className="text-4xl py-4 font-bold border-l-8 border-primary pl-8">Checkout Page</h2>
             </div>
-
-            <Cart cartItem={formattedItems}></Cart>
+            <Checkout cartItems={formattedItems}></Checkout>
         </div>
     );
 };
 
-export default CartPage;
+export default CheckoutPage;
