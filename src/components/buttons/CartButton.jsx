@@ -9,8 +9,8 @@ import Swal from "sweetalert2";
 
 const CartButton = ({ product, onAddToCart }) => {
   const session = useSession();
-  const [adding, setAdding] = useState(false);
-  const [added, setAdded] = useState(false);
+  // const [adding, setAdding] = useState(false);
+  // const [added, setAdded] = useState(false);
   const router = useRouter();
   const pathName = usePathname();
   const [isLoading, setIsLoading] = useState(false);
@@ -21,7 +21,7 @@ const CartButton = ({ product, onAddToCart }) => {
   const handleAddToCart = async () => {
     setIsLoading(true);
     if(isLogin){
-      const result = await handleCart({product, inc:true});
+      const result = await handleCart(product._id);
       if(result.success){
         Swal.fire("Added to Card", product?.title, "success");
       } else {

@@ -4,7 +4,7 @@ import React from 'react';
 
 const CartPage = async () => {
     const cartItems = await getCart();
-    const formattedItems = cartItems.map(item => ({ ...item, _id: item._id.toString() }))
+    const formattedItems = cartItems.map(item => ({ ...item, productId: item._id.toString() }))
 
     return (
         <div>
